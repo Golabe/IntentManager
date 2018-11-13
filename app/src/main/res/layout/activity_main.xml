@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <Button
+        android:text="普通跳转"
+        android:onClick="gotoNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="携带参数跳转"
+        android:onClick="gotoParams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:text="携带参数并接收返回值跳转"
+        android:onClick="gotoResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:transitionName="BUTTON"
+        android:text="共享动画"
+        android:onClick="gotoTransition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
