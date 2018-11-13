@@ -4,6 +4,7 @@
 
 
 <div align="center"><image src="https://github.com/Golabe/IntentManager/blob/master/gif/GIF.gif?raw=true" width="400"/></div>
+
 ### 使用
 
 gradle
