@@ -7,7 +7,10 @@
 
 ### 使用
 
-gradle
+gradle添加
+```xml
+implementation 'top.golabe.intent.IntentManager:library:1.0.0'
+```
 
 
 简单
