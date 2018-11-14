@@ -71,6 +71,10 @@ implementation 'top.golabe.intent.IntentManager:library:1.0.0'
                 .result(RESULT_OK);
 ```
 
-#### 支持类型
-String,Float,Integer,Serializable,Parcelable,Long
+### 支持类型
+#### String
+#### Float
+#### Integer
+#### Long;
+#### 对象必须实现Serializable，或者Parcelable
 
