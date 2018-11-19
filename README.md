@@ -2,7 +2,7 @@
 ## Android 界面之间跳转工具
 
 ### 新增 overridePendingTransition方法
-当overridePendingTransition和makeSceneTransitionAnimation一起使用时，SDK版本大于等于21时执行makeSceneTransitionAnimation相关动画，反之执行overridePendingTransition相关动画。
+- 当overridePendingTransition和makeSceneTransitionAnimation一起使用时，SDK版本大于等于21时执行makeSceneTransitionAnimation相关动画，反之执行overridePendingTransition相关动画。
 
 <div align="center"><image src="https://github.com/Golabe/IntentManager/blob/master/gif/GIF.gif?raw=true" width="400"/></div>
 
