@@ -1,8 +1,16 @@
 # IntentManager
 ## Android 界面之间跳转工具
+
+
+
+<div align="center"><image src="https://github.com/Golabe/IntentManager/blob/master/gif/GIF.gif?raw=true" width="400"/></div>
+
 ### 使用
 
-gradle
+gradle添加
+```xml
+implementation 'top.golabe.intent.IntentManager:library:1.0.0'
+```
 
 
 简单
@@ -62,4 +70,11 @@ gradle
                 .params("username","allen")
                 .result(RESULT_OK);
 ```
+
+### 支持类型
+#### String
+#### Float
+#### Integer
+#### Long;
+#### 对象必须实现Serializable，或者Parcelable
 
