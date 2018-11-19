@@ -1,6 +1,5 @@
 package top.golabe.intent;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +11,7 @@ import android.support.v4.util.Pair;
 import android.view.View;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,15 +20,56 @@ public class IntentGo {
     private final int DEFAULT_RESULT_CODE = -0x00111;
 
     private Map<String, Object> mParams = null;
-    @SuppressLint("StaticFieldLeak")
-    private static Context mCtx;
+    private static Context mContext = null;
     private Class<?> mTargetClass = null;
     private int mResultCode = DEFAULT_RESULT_CODE;
     private Pair[] mPairs = null;
+    private int mEnterAnim = -1;
+    private int mExitAnim = -1;
 
     public void go() {
-        Intent intent = new Intent(mCtx, mTargetClass);
+        Intent intent = new Intent(mContext, mTargetClass);
+        addParams(intent);
+        gotoIntent(intent);
 
+    }
+
+    private void gotoIntent(Intent intent) {
+        if (mPairs != null && mPairs.length > 0) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, mPairs);
+                if (mResultCode != DEFAULT_RESULT_CODE) {
+                    ActivityCompat.startActivityForResult((Activity) mContext, intent, mResultCode, optionsCompat.toBundle());
+                } else {
+                    ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
+                }
+            } else {
+                if (mResultCode != DEFAULT_RESULT_CODE) {
+                    ((Activity) mContext).startActivityForResult(intent, mResultCode);
+                } else {
+                    mContext.startActivity(intent);
+                }
+                if (mExitAnim != -1 && mEnterAnim != -1) {
+                    ((Activity) mContext).overridePendingTransition(mEnterAnim, mExitAnim);
+                }
+            }
+
+
+        } else if (mResultCode != DEFAULT_RESULT_CODE) {
+
+            ((Activity) mContext).startActivityForResult(intent, mResultCode);
+
+        } else {
+            mContext.startActivity(intent);
+
+        }
+        if (mPairs == null && mExitAnim != -1 && mEnterAnim != -1) {
+            ((Activity) mContext).overridePendingTransition(mEnterAnim, mExitAnim);
+        }
+    }
+
+
+    private void addParams(Intent intent) {
         if (mParams != null && mParams.size() > 0) {
             Bundle bundle = new Bundle();
 
@@ -54,28 +95,6 @@ public class IntentGo {
             }
             intent.putExtras(bundle);
         }
-
-
-        if (mPairs != null && mPairs.length > 0) {
-
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mCtx, mPairs);
-
-            if (mResultCode != DEFAULT_RESULT_CODE) {
-                ActivityCompat.startActivityForResult((Activity) mCtx, intent, mResultCode, optionsCompat.toBundle());
-            } else {
-                ActivityCompat.startActivity(mCtx, intent, optionsCompat.toBundle());
-            }
-
-        } else if (mResultCode != DEFAULT_RESULT_CODE) {
-
-            ((Activity) mCtx).startActivityForResult(intent, mResultCode);
-
-        } else {
-
-            mCtx.startActivity(intent);
-
-        }
-
     }
 
     public IntentGo target(Class<?> cls) {
@@ -109,13 +128,15 @@ public class IntentGo {
         return this;
     }
 
-    private IntentGo() {
-    }
 
     public static IntentGo with(Context context) {
-        mCtx = context;
+        mContext = new WeakReference<>(context).get();
         return new IntentGo();
     }
 
-
+    public IntentGo overridePendingTransition(int enterAnim, int exitAnim) {
+        this.mEnterAnim = enterAnim;
+        this.mExitAnim = exitAnim;
+        return this;
+    }
 }

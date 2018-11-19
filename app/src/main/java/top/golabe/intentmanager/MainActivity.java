@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 .params("userInfo", new User("allen", 12))
                 .params("id", 2000000L)
                 .params("float", 0.5F)
+                .overridePendingTransition( R.anim.anim_in,R.anim.anim_out)
                 .params("bool", false)
                 .go();
     }
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 .params("id", 2000000L)
                 .params("float", 0.5F)
                 .params("bool", false)
+                .overridePendingTransition( R.anim.anim_in,R.anim.anim_out)
                 .makeSceneTransitionAnimation(new Pair<>(view, "BUTTON"))
                 .go();
     }
